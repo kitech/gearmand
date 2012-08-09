@@ -34,6 +34,10 @@ extern "C" {
 
 /**
  * Create a new gearmand connection.
+ * 
+ * 这个连接既包括来自客户端的连接，也包括来自worker端的连接。
+ * 内部如何区分呢
+ * 
  * @param gearmand Server instance structure previously initialized with
  *        gearmand_create.
  * @param fd File descriptor of new connection.
