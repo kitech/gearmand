@@ -1,0 +1,110 @@
+# vim:ft=automake
+
+noinst_HEADERS+= tests/libgearman-1.0/client_test.h
+
+LIBGEARMAN_1_0_CLIENT_LDADD=
+LIBGEARMAN_1_0_CLIENT_LDADD+= libgearman/libgearman.la
+LIBGEARMAN_1_0_CLIENT_LDADD+= libtest/libtest.la
+LIBGEARMAN_1_0_CLIENT_LDADD+= tests/libstartworker.la
+
+noinst_HEADERS+= tests/libgearman-1.0/gearman_client_job_status_by_unique.h
+
+tests_libgearman_1_0_client_test_CXXFLAGS=
+tests_libgearman_1_0_client_test_SOURCES=
+tests_libgearman_1_0_client_test_DEPENDENCIES=
+tests_libgearman_1_0_client_test_LDADD=
+
+tests_libgearman_1_0_client_test_CXXFLAGS+= $(BOOST_CPPFLAGS)
+tests_libgearman_1_0_client_test_SOURCES+= tests/libgearman-1.0/client_test.cc 
+tests_libgearman_1_0_client_test_SOURCES+= tests/libgearman-1.0/do.cc 
+tests_libgearman_1_0_client_test_SOURCES+= tests/libgearman-1.0/do_background.cc 
+tests_libgearman_1_0_client_test_SOURCES+= tests/libgearman-1.0/execute.cc 
+tests_libgearman_1_0_client_test_SOURCES+= tests/libgearman-1.0/gearman_client_do_job_handle.cc 
+tests_libgearman_1_0_client_test_SOURCES+= tests/libgearman-1.0/gearman_client_job_status_by_unique.cc
+tests_libgearman_1_0_client_test_SOURCES+= tests/libgearman-1.0/gearman_execute_partition.cc 
+tests_libgearman_1_0_client_test_SOURCES+= tests/workers/v2/split.cc
+tests_libgearman_1_0_client_test_SOURCES+= tests/workers/aggregator/cat.cc
+tests_libgearman_1_0_client_test_SOURCES+= tests/libgearman-1.0/limits.cc 
+tests_libgearman_1_0_client_test_SOURCES+= tests/libgearman-1.0/protocol.cc 
+tests_libgearman_1_0_client_test_SOURCES+= tests/libgearman-1.0/server_options.cc 
+tests_libgearman_1_0_client_test_SOURCES+= tests/libgearman-1.0/task.cc 
+tests_libgearman_1_0_client_test_SOURCES+= tests/libgearman-1.0/unique.cc 
+tests_libgearman_1_0_client_test_SOURCES+= tests/workers/v1/echo_or_react.cc
+tests_libgearman_1_0_client_test_SOURCES+= tests/workers/v1/echo_or_react_chunk.cc
+tests_libgearman_1_0_client_test_SOURCES+= tests/workers/v1/unique.cc
+tests_libgearman_1_0_client_test_SOURCES+= tests/workers/v2/echo_or_react.cc
+tests_libgearman_1_0_client_test_SOURCES+= tests/workers/v2/echo_or_react_chunk.cc
+tests_libgearman_1_0_client_test_SOURCES+= tests/workers/v2/sleep_return_random.cc
+tests_libgearman_1_0_client_test_SOURCES+= tests/workers/v2/unique.cc
+tests_libgearman_1_0_client_test_DEPENDENCIES+= ${LIBGEARMAN_1_0_CLIENT_LDADD}
+tests_libgearman_1_0_client_test_LDADD+= ${LIBGEARMAN_1_0_CLIENT_LDADD}
+check_PROGRAMS+=tests/libgearman-1.0/client_test
+noinst_PROGRAMS+=tests/libgearman-1.0/client_test
+
+tests_libgearman_1_0_internals_test_SOURCES=
+tests_libgearman_1_0_internals_test_DEPENDENCIES=
+tests_libgearman_1_0_internals_test_LDADD=
+
+tests_libgearman_1_0_internals_test_SOURCES+= tests/libgearman-1.0/internals.cc
+tests_libgearman_1_0_internals_test_SOURCES+= tests/libgearman-1.0/regression.cc
+tests_libgearman_1_0_internals_test_DEPENDENCIES+= ${LIBGEARMAN_1_0_CLIENT_LDADD}
+tests_libgearman_1_0_internals_test_DEPENDENCIES+= libgearman/libgearmancore.la
+tests_libgearman_1_0_internals_test_LDADD+= ${LIBGEARMAN_1_0_CLIENT_LDADD}
+tests_libgearman_1_0_internals_test_LDADD+= libgearman/libgearmancore.la
+check_PROGRAMS+= tests/libgearman-1.0/internals_test
+noinst_PROGRAMS+= tests/libgearman-1.0/internals_test
+
+tests_libgearman_1_0_worker_test_DEPENDENCIES=
+tests_libgearman_1_0_worker_test_LDADD=
+tests_libgearman_1_0_worker_test_SOURCES=
+
+tests_libgearman_1_0_worker_test_SOURCES+= tests/libgearman-1.0/worker_test.cc
+tests_libgearman_1_0_worker_test_SOURCES+= tests/workers/v2/echo_or_react.cc
+tests_libgearman_1_0_worker_test_SOURCES+= tests/workers/v2/echo_or_react_chunk.cc
+tests_libgearman_1_0_worker_test_DEPENDENCIES+= ${LIBGEARMAN_1_0_CLIENT_LDADD}
+tests_libgearman_1_0_worker_test_DEPENDENCIES+= libgearman/libgearmancore.la
+tests_libgearman_1_0_worker_test_LDADD+= ${LIBGEARMAN_1_0_CLIENT_LDADD}
+tests_libgearman_1_0_worker_test_LDADD+= libgearman/libgearmancore.la
+check_PROGRAMS+=tests/libgearman-1.0/worker_test
+noinst_PROGRAMS+=tests/libgearman-1.0/worker_test
+
+test-internals: tests/libgearman-1.0/internals_test gearmand/gearmand
+	@tests/libgearman-1.0/internals_test
+
+gdb-internals: tests/libgearman-1.0/internals_test gearmand/gearmand
+	@$(GDB_COMMAND) tests/libgearman-1.0/internals_test
+
+helgrind-internals: tests/internals_test gearmand/gearmand
+	@$(HELGRIND_COMMAND) tests/libgearman-1.0/internals_test
+
+
+valgrind-internals: tests/libgearman-1.0/internals_test gearmand/gearmand
+	@$(VALGRIND_COMMAND) tests/libgearman-1.0/internals_test
+
+valgrind-worker: tests/libgearman-1.0/worker_test gearmand/gearmand
+	@$(VALGRIND_COMMAND) tests/libgearman-1.0/worker_test
+
+massif-worker: tests/libgearman-1.0/worker_test gearmand/gearmand
+	@$(MASSIF_COMMAND) tests/libgearman-1.0/worker_test
+
+helgrind-worker: tests/libgearman-1.0/worker_test gearmand/gearmand
+	@$(HELGRIND_COMMAND) tests/libgearman-1.0/worker_test
+
+gdb-worker: tests/libgearman-1.0/worker_test gearmand/gearmand
+	@$(GDB_COMMAND) tests/libgearman-1.0/worker_test
+
+ptrdiff-worker: tests/libgearman-1.0/worker_test gearmand/gearmand
+	@$(PTRCHECK_COMMAND) tests/libgearman-1.0/worker_test
+
+test-worker: tests/libgearman-1.0/worker_test gearmand/gearmand
+	@tests/libgearman-1.0/worker_test
+
+test-client: tests/libgearman-1.0/client_test gearmand/gearmand
+	@tests/libgearman-1.0/client_test
+
+gdb-client: tests/libgearman-1.0/client_test gearmand/gearmand
+	@$(GDB_COMMAND) tests/libgearman-1.0/client_test
+
+valgrind-client: tests/libgearman-1.0/client_test gearmand/gearmand
+	@$(VALGRIND_COMMAND) tests/libgearman-1.0/client_test
+

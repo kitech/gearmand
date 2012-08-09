@@ -1,0 +1,28 @@
+# vim:ft=automake
+# Gearman server and library
+# Copyright (C) 2011 Data Differential, http://datadifferential.com/
+# All rights reserved.
+#
+# Use and distribution licensed under the BSD license.  See
+# the COPYING file in the parent directory for full text.
+#
+# Included from Top Level Makefile.am
+# All paths should be given relative to the root
+#
+
+tests_tokyocabinet_test_SOURCES=
+tests_tokyocabinet_test_DEPENDENCIES=
+tests_tokyocabinet_test_LDADD=
+
+tests_tokyocabinet_test_DEPENDENCIES+= $(CLIENT_LDADD)
+tests_tokyocabinet_test_LDADD+= $(CLIENT_LDADD)
+tests_tokyocabinet_test_SOURCES+= tests/tokyocabinet_test.cc
+tests_tokyocabinet_test_SOURCES+= tests/basic.cc
+check_PROGRAMS+= tests/tokyocabinet_test
+noinst_PROGRAMS+= tests/tokyocabinet_test
+
+test-tokyocabinet: tests/tokyocabinet_test gearmand/gearmand
+	@tests/tokyocabinet_test
+
+valgrind-tokyocabinet: tests/tokyocabinet_test gearmand/gearmand
+	@$(VALGRIND_COMMAND) tests/tokyocabinet_test

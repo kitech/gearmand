@@ -1,0 +1,34 @@
+# vim:ft=automake
+# Gearman server and library
+# Copyright (C) 2011 Data Differential, http://datadifferential.com/
+# All rights reserved.
+#
+# Use and distribution licensed under the BSD license.  See
+# the COPYING file in the parent directory for full text.
+#
+# Included from Top Level Makefile.am
+# All paths should be given relative to the root
+#
+
+tests_ephemeral_test_SOURCES=
+tests_ephemeral_test_CXXFLAGS=
+tests_ephemeral_test_DEPENDENCIES= ${CLIENT_LDADD}
+tests_ephemeral_test_LDADD= ${CLIENT_LDADD}
+
+tests_ephemeral_test_SOURCES+= tests/basic.cc
+tests_ephemeral_test_SOURCES+= tests/ephemeral_test.cc
+
+check_PROGRAMS += tests/ephemeral_test
+noinst_PROGRAMS += tests/ephemeral_test
+
+test-ephemeral: tests/ephemeral_test gearmand/gearmand
+	@tests/ephemeral_test
+
+gdb-ephemeral: tests/ephemeral_test gearmand/gearmand
+	@$(GDB_COMMAND) tests/ephemeral_test
+
+helgrind-ephemeral: tests/ephemeral_test gearmand/gearmand
+	@$(HELGRIND_COMMAND) tests/ephemeral_test
+
+valgrind-ephemeral: tests/ephemeral_test gearmand/gearmand
+	@$(VALGRIND_COMMAND) tests/ephemeral_test

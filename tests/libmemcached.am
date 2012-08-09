@@ -1,0 +1,29 @@
+# vim:ft=automake
+# Gearman server and library
+# Copyright (C) 2011 Data Differential, http://datadifferential.com/
+# All rights reserved.
+#
+# Use and distribution licensed under the BSD license.  See
+# the COPYING file in the parent directory for full text.
+#
+# Included from Top Level Makefile.am
+# All paths should be given relative to the root
+#
+
+tests_memcached_test_SOURCES=
+tests_memcached_test_DEPENDENCIES=
+tests_memcached_test_LDADD=
+
+tests_memcached_test_SOURCES+= tests/basic.cc
+tests_memcached_test_SOURCES+= tests/memcached_test.cc
+tests_memcached_test_DEPENDENCIES+= $(CLIENT_LDADD)
+tests_memcached_test_LDADD+= $(CLIENT_LDADD)
+
+check_PROGRAMS+= tests/memcached_test
+noinst_PROGRAMS+= tests/memcached_test
+
+test-libmemcached: tests/memcached_test gearmand/gearmand
+	@tests/memcached_test  
+
+valgrind-libmemcached: tests/memcached_test gearmand/gearmand
+	@tests/memcached_test  

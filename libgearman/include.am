@@ -1,0 +1,119 @@
+# vim:ft=automake
+# Gearman server and library 
+# Copyright (C) 2011 Data Differential, http://datadifferential.com/
+# Copyright (C) 2009-2010 Brian Aker, Eric Day, Monty Taylor All rights
+# Copyright (C) 2008 Brian Aker, Eric Day 
+#
+# Use and distribution licensed under the BSD license.  See
+# the COPYING file in the parent directory for full text.
+#
+# Included from Top Level Makefile.am
+# All paths should be given relative to the root
+
+nobase_include_HEADERS+= libgearman/gearman.h
+
+noinst_HEADERS+= libgearman/job.h
+noinst_HEADERS+= libgearman/pipe.h
+noinst_HEADERS+= \
+		 libgearman/actions.hpp \
+		 libgearman/add.hpp \
+		 libgearman/aggregator.hpp \
+		 libgearman/allocator.hpp \
+		 libgearman/assert.hpp \
+		 libgearman/backtrace.hpp \
+		 libgearman/byteorder.h \
+		 libgearman/command.h \
+		 libgearman/common.h \
+		 libgearman/connection.hpp \
+		 libgearman/do.hpp \
+		 libgearman/error.hpp \
+		 libgearman/function/base.hpp \
+		 libgearman/function/function_v1.hpp \
+		 libgearman/function/function_v2.hpp \
+		 libgearman/function/make.hpp \
+		 libgearman/function/null.hpp \
+		 libgearman/function/partition.hpp \
+		 libgearman/is.hpp \
+		 libgearman/log.hpp \
+		 libgearman/ostream.hpp \
+		 libgearman/packet.hpp \
+		 libgearman/protocol/submit.h \
+		 libgearman/result.hpp \
+		 libgearman/run.hpp \
+		 libgearman/status.hpp \
+		 libgearman/strcommand.h \
+		 libgearman/string.hpp \
+		 libgearman/task.hpp \
+		 libgearman/unique.hpp \
+		 libgearman/universal.hpp \
+		 libgearman/vector.hpp
+
+noinst_LTLIBRARIES+= libgearman/libgearmancore.la
+libgearman_libgearmancore_la_SOURCES= \
+				      libgearman/allocator.cc \
+				      libgearman/byteorder.cc \
+				      libgearman/command.cc \
+				      libgearman/connection.cc \
+				      libgearman/error.cc \
+				      libgearman/log.cc \
+				      libgearman/packet.cc \
+				      libgearman/strcommand.cc \
+				      libgearman/strerror.cc \
+				      libgearman/universal.cc \
+				      libgearman/vector.cc
+
+libgearman_libgearmancore_la_CXXFLAGS= -DBUILDING_LIBGEARMAN
+
+lib_LTLIBRARIES+= libgearman/libgearman.la
+libgearman_libgearman_la_SOURCES= \
+				  libgearman/actions.cc \
+				  libgearman/aggregator.cc \
+				  libgearman/allocator.cc \
+				  libgearman/argument.cc \
+				  libgearman/add.cc \
+				  libgearman/backtrace.cc \
+				  libgearman/byteorder.cc \
+				  libgearman/client.cc \
+				  libgearman/command.cc \
+				  libgearman/connection.cc \
+				  libgearman/do.cc \
+				  libgearman/error.cc \
+				  libgearman/execute.cc \
+				  libgearman/function.cc \
+				  libgearman/function/function_v2.cc \
+				  libgearman/function/make.cc \
+				  libgearman/function/partition.cc \
+				  libgearman/gearman.cc \
+				  libgearman/job.cc \
+				  libgearman/kill.cc \
+				  libgearman/log.cc \
+				  libgearman/packet.cc \
+				  libgearman/parse.cc \
+				  libgearman/protocol/submit.cc \
+				  libgearman/result.cc \
+				  libgearman/run.cc \
+				  libgearman/status.cc \
+				  libgearman/strcommand.cc \
+				  libgearman/strerror.cc \
+				  libgearman/string.cc \
+				  libgearman/task.cc \
+				  libgearman/task_attr.cc \
+				  libgearman/unique.cc \
+				  libgearman/universal.cc \
+				  libgearman/vector.cc \
+				  libgearman/worker.cc
+
+libgearman_libgearman_la_SOURCES+= libgearman/pipe.cc
+
+libgearman_libgearman_la_CXXFLAGS= -DBUILDING_LIBGEARMAN
+
+libgearman_libgearman_la_LDFLAGS= -version-info $(GEARMAN_LIBRARY_VERSION)
+
+libgearman_libgearman_la_LIBADD= $(LIBUUID_LDFLAGS)
+
+if TARGET_LINUX
+libgearman_libgearman_la_LIBADD+= -lm
+endif
+
+
+DISTCLEANFILES+= config/top.h
