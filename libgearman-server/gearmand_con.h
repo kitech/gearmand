@@ -37,6 +37,7 @@ extern "C" {
  * 
  * 这个连接既包括来自客户端的连接，也包括来自worker端的连接。
  * 内部如何区分呢
+ * 带gearmand的结构是面向client的， 不带gearman的是面向worker的
  * 
  * @param gearmand Server instance structure previously initialized with
  *        gearmand_create.

@@ -37,6 +37,10 @@
 
 #pragma once
 
+/*
+ 这才是gearmand的超级实例结构吧
+ 带gearmand的结构是面向client的， 不带gearman的是面向worker的
+ */
 struct gearmand_st
 {
   gearmand_verbose_t verbose;
@@ -46,11 +50,11 @@ struct gearmand_st
   bool is_wakeup_event;
   int timeout;
   uint32_t port_count;
-  uint32_t threads;
+  uint32_t threads;   // 活跃线程数吗？和连接数有什么关系？
   uint32_t thread_count;
   uint32_t free_dcon_count;
   uint32_t max_thread_free_dcon_count;
-  int wakeup_fd[2];
+  int wakeup_fd[2];   // 双工管道通信描述符
   const char *host;
   gearmand_log_fn *log_fn;
   void *log_context;
@@ -58,7 +62,7 @@ struct gearmand_st
   struct gearmand_port_st *port_list;
   gearmand_thread_st *thread_list;
   gearmand_thread_st *thread_add_next;
-  gearmand_con_st *free_dcon_list;
+  gearmand_con_st *free_dcon_list;  // 可用连接结构列表
   gearman_server_st server;
   struct event wakeup_event;
 };

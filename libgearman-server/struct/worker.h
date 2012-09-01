@@ -37,6 +37,11 @@
 
 #pragma once
 
+/*
+ * 又见链表结构
+ * 而且还是两条链表
+ * 
+ */
 struct gearman_server_worker_st
 {
   uint32_t job_count;

@@ -37,6 +37,14 @@
 
 #pragma once
 
+/*
+  链表方式维护连接
+  
+  每个连接都是独立的线程吗？
+  每个连接都有独立的事件循环吗？
+  
+  gearman_server_con_st是什么结构？干什么用的？
+ */
 struct gearmand_con_st
 {
   short last_events;

@@ -64,6 +64,10 @@ union queue_un {
   char raw[sizeof(struct queue_st)];
 };
 
+/* 
+ 处理任务的主要结构
+ 带gearmand的结构是面向client的， 不带gearman的是面向worker的
+ */
 struct gearman_server_st
 {
   struct {
@@ -94,7 +98,7 @@ struct gearman_server_st
   uint32_t free_client_count;
   uint32_t free_worker_count;
   gearman_server_thread_st *thread_list;
-  gearman_server_function_st *function_list;
+  gearman_server_function_st *function_list;  // 已注册的函数表
   gearman_server_packet_st *free_packet_list;
   gearman_server_job_st *free_job_list;
   gearman_server_client_st *free_client_list;
