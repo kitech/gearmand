@@ -69,14 +69,14 @@ typedef enum
 
 
 #ifdef __cplusplus
-
+// C++ 结构体的前置声明
 struct gearman_server_thread_st;
 struct gearman_server_st;
 struct gearman_server_con_st;
 struct gearmand_io_st;
 
 #else /* Types. */
-
+// C 结构体的前置声明
 typedef struct gearman_server_client_st gearman_server_client_st;
 typedef struct gearman_server_con_st gearman_server_con_st;
 typedef struct gearman_server_function_st gearman_server_function_st;
