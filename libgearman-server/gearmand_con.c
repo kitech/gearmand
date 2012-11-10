@@ -69,7 +69,8 @@ static gearmand_error_t _con_add(gearmand_thread_st *thread,
 /*
  * Public definitions
  */
-
+// 创建新的客户端连接结构实例
+// 创建成功后放到可用线程链表，并唤醒该线程。
 gearmand_error_t gearmand_con_create(gearmand_st *gearmand, int fd,
                                      const char *host, const char *port,
                                      gearmand_connection_add_fn *add_fn)

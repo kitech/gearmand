@@ -254,7 +254,9 @@ static void gearmand_set_log_fn(gearmand_st *gearmand, gearmand_log_fn *function
   gearmand->log_context= context;
   gearmand->verbose= verbose;
 }
-
+// 将新的监听端口加入到监听端口链表?
+// 应该只有一个服务器端口，为什么要这个函数实现多端口监听呢？
+// 除了主服务端口，其他随后添加进来的端口是做什么用的？
 gearmand_error_t gearmand_port_add(gearmand_st *gearmand, const char *port,
                                    gearmand_connection_add_fn *function)
 {
@@ -339,6 +341,7 @@ gearmand_error_t gearmand_run(gearmand_st *gearmand)
     }
     while (x < gearmand->threads);
 
+    // 在启动时执行任务队列中保存的task，可能是server崩溃保存下来的
     gearmand->ret= gearman_server_queue_replay(&(gearmand->server));
     if (gearmand->ret != GEARMAN_SUCCESS)
     {
@@ -346,6 +349,7 @@ gearmand_error_t gearmand_run(gearmand_st *gearmand)
     }
   }
 
+  // ???这是什么意思呢？
   gearmand->ret= _watch_events(gearmand);
   if (gearmand->ret != GEARMAN_SUCCESS)
   {
@@ -354,6 +358,7 @@ gearmand_error_t gearmand_run(gearmand_st *gearmand)
 
   gearmand_debug("Entering main event loop");
 
+  // 阻塞等待事件
   if (event_base_loop(gearmand->base, 0) == -1)
   {
     gearmand_fatal("event_base_loop(-1)");
@@ -645,6 +650,7 @@ static void _listen_close(gearmand_st *gearmand)
   }
 }
 
+// 把监听端口添加到要通知的事件循环中
 static gearmand_error_t _listen_watch(gearmand_st *gearmand)
 {
   if (gearmand->is_listen_event)
@@ -697,6 +703,8 @@ static void _listen_clear(gearmand_st *gearmand)
   gearmand->is_listen_event= false;
 }
 
+// 服务监听端口事件处理函数
+// 接受连接，如果成功则创建新的客户端连接结构实例，
 static void _listen_event(int fd, short events __attribute__ ((unused)), void *arg)
 {
   gearmand_port_st *port= (gearmand_port_st *)arg;
@@ -910,6 +918,7 @@ static void _wakeup_event(int fd, short events __attribute__ ((unused)),
   }
 }
 
+// 将监听事件与唤醒事件添加到事件通知集合中，在有相应瓣事件发生时，接收并执行相应的事件处理
 static gearmand_error_t _watch_events(gearmand_st *gearmand)
 {
   gearmand_error_t ret;

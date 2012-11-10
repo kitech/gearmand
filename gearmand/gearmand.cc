@@ -353,6 +353,7 @@ int main(int argc, char *argv[])
     }
   }
 
+  // 进入主进程的事件循环，直到显式关闭服务进程
   gearmand_error_t ret= gearmand_run(_gearmand);
 
   gearmand_free(_gearmand);

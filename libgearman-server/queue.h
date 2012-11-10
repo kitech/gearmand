@@ -43,6 +43,18 @@
 extern "C" {
 #endif
 
+    /*
+      会分另在什么时候调用这几个队列函数呢？
+      add，加入队列，应该是在接收到任务，发出去之前调用吧？
+      flush, 清空队列，什么时候？
+      done，从队列删掉，1是在任务分配到worker服务器之后worker完成之前调用，2还是在worker完成之后调用？
+           如果是2,那么如果worker执行过程崩溃，这个done还会不会调用呢？
+                  这个task会分配给其他的worker处理吗？
+                  如果这个时候再启动worker，这个task还会再分配吗？
+                  如果重启job server这个task是否还会再次执行呢？
+
+      replay，重新执行队列中的task，这个是在什么时候调用呢？
+     */
 gearmand_error_t gearman_queue_add(gearman_server_st *server,
                                    const char *unique,
                                    size_t unique_size,
@@ -65,6 +77,7 @@ gearmand_error_t gearman_queue_replay(gearman_server_st *server,
                                       gearman_queue_add_fn *add_fn,
                                       void *add_context);
 
+    // 这个不是重复声明了吗？
 gearmand_error_t gearman_queue_done(gearman_server_st *server,
                                     const char *unique,
                                     size_t unique_size,

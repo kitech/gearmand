@@ -11,13 +11,14 @@
 
 #include <libgearman-1.0/visibility.h>
 
+// 主服务进程唤醒事件原因列表
 typedef enum
 {
-  GEARMAND_WAKEUP_PAUSE,
+    GEARMAND_WAKEUP_PAUSE,  // 暂停？能暂停的了吗，遇到这个事件是怎么处理的
   GEARMAND_WAKEUP_SHUTDOWN,
   GEARMAND_WAKEUP_SHUTDOWN_GRACEFUL,
-  GEARMAND_WAKEUP_CON,
-  GEARMAND_WAKEUP_RUN
+    GEARMAND_WAKEUP_CON,        // 有新的客户端连接创建成功
+    GEARMAND_WAKEUP_RUN          // ???
 } gearmand_wakeup_t;
 
 #ifdef __cplusplus

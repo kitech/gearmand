@@ -247,7 +247,8 @@ void gearmand_thread_run(gearmand_thread_st *thread)
 /*
  * Private definitions
  */
-
+// 线程函数,阻塞在线程的事件循环中，并在接收到指定在该线程的事件发生时执行相应的事件处理
+// 既然使用了boost，为什么不用boost的线程库呢？看这个线程函数的原型像pthread的线程函数形式。
 static void *_thread(void *data)
 {
   gearmand_thread_st *thread= (gearmand_thread_st *)data;

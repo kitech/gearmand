@@ -45,8 +45,11 @@ struct queue_st {
   gearman_queue_replay_fn *_replay_fn;
 };
 
+// 目前gearman支持两个版本的queue插件版本
+// FUNCTION方式是简单的支持普通函数的版本
+// CLASS方式是支持比较新的类方式的版本
 enum queue_version_t {
-  QUEUE_VERSION_FUNCTION,
+    QUEUE_VERSION_FUNCTION, // 这个应该是老版本吧
   QUEUE_VERSION_CLASS
 };
 

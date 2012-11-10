@@ -120,6 +120,7 @@ GEARMAN_API
 void gearmand_free(gearmand_st *gearmand);
 
 
+    // 获取当前gearmand实例中的gearman server结构实例,这个结构存储了与worker的连接信息
 GEARMAN_API
 gearman_server_st *gearmand_server(gearmand_st *gearmand);
 
