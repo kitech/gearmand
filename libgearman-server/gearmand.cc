@@ -287,6 +287,7 @@ gearman_server_st *gearmand_server(gearmand_st *gearmand)
   return &gearmand->server;
 }
 
+// gearmand 服务入口函数，在main内直接调用
 gearmand_error_t gearmand_run(gearmand_st *gearmand)
 {
   libgearman::server::Epoch epoch;
