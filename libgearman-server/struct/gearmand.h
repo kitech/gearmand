@@ -39,7 +39,7 @@
 
 /*
  这才是gearmand的超级实例结构吧
- 带gearmand的结构是面向client的， 不带gearman的是面向worker的
+ 带gearmand的结构是面向client的， 带gearman的是面向worker的
  */
 struct gearmand_st
 {
@@ -55,14 +55,14 @@ struct gearmand_st
   uint32_t free_dcon_count;
   uint32_t max_thread_free_dcon_count;
   int wakeup_fd[2];   // 双工管道通信描述符
-  const char *host;
+  const char *host;   // 监听主机名/IP地址
   gearmand_log_fn *log_fn;
   void *log_context;
-  struct event_base *base;
+  struct event_base *base;    //libevent 事件循环名柄
   struct gearmand_port_st *port_list;
-  gearmand_thread_st *thread_list;
-  gearmand_thread_st *thread_add_next;
-  gearmand_con_st *free_dcon_list;  // 可用连接结构列表
-  gearman_server_st server;
+  gearmand_thread_st *thread_list;      // 接受client连接的线程链表
+  gearmand_thread_st *thread_add_next;   // ???
+  gearmand_con_st *free_dcon_list;  // 可用连接结构列表, 与上面的线程链表有什么对应关系？
+  gearman_server_st server;         // 接受worker连接的server实例结构
   struct event wakeup_event;
 };

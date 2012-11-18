@@ -69,7 +69,7 @@ union queue_un {
 
 /* 
  处理任务的主要结构
- 带gearmand的结构是面向client的， 不带gearman的是面向worker的
+ 带gearmand的结构是面向client的， 带gearman的是面向worker的
  */
 struct gearman_server_st
 {
